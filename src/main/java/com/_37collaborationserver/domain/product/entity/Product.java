@@ -1,10 +1,6 @@
 package com._37collaborationserver.domain.product.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,7 +25,7 @@ public class Product {
 	@Column(nullable = false)
 	private String info;
 
-	@Column(nullable = false)
+	@Column(nullable = false,name = "usage_manual")
 	private String manual;
 
 	@Column(nullable = false)
