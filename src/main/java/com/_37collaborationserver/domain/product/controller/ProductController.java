@@ -34,9 +34,9 @@ public class ProductController {
     @GetMapping("/{productId}")
     public ResponseEntity<SuccessResponse<ProductItemResponse>> getProductById(
             @PathVariable Long productId,
-            @RequestParam(defaultValue = "1") Long userId
+            @RequestHeader(value = "userId", defaultValue = "1") String userId
     ) {
-        ProductItemResponse product = productService.getProductById(productId, userId);
+        ProductItemResponse product = productService.getProductById(productId, Long.valueOf(userId));
         return ResponseEntity.ok(
                 SuccessResponse.of(SuccessCode.SUCCESS_FETCH, product)
         );
