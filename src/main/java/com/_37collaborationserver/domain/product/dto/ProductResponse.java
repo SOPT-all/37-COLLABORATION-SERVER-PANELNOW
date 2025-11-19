@@ -1,6 +1,6 @@
 package com._37collaborationserver.domain.product.dto;
 
-import com._37collaborationserver.domain.Product;
+import com._37collaborationserver.domain.product.entity.Product;
 import lombok.Builder;
 
 @Builder
@@ -8,7 +8,7 @@ public record ProductResponse(
         Long id,
         String imageUrl,
         String name,
-        Long price,
+        int price,
         String day
 ) {
     public static ProductResponse from(Product product) {
