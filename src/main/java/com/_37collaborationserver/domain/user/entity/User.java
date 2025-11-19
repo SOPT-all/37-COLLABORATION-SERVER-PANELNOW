@@ -18,17 +18,22 @@ public class User {
 	private Long id;
 
 	@Column(nullable = false)
-	private String currentPoint;
+	private int currentPoint;
 
 	@Column(nullable = false)
 	private String phoneNumber;
 
 	@Column(nullable = false)
-	private String usedPoint;
+	private int usedPoint;
 
-	public User(String currentPoint, String phoneNumber, String usedPoint) {
+	public User(int currentPoint, String phoneNumber, int usedPoint) {
 		this.currentPoint = currentPoint;
 		this.phoneNumber = phoneNumber;
 		this.usedPoint = usedPoint;
+	}
+
+	public void updatePoint(int point){
+		this.currentPoint -= point;
+		this.usedPoint += point;
 	}
 }
