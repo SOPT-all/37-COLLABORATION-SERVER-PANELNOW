@@ -1,9 +1,13 @@
 package com._37collaborationserver.domain.product.service;
 
+import com._37collaborationserver.domain.product.dto.ProductItemResponse;
 import com._37collaborationserver.domain.product.entity.Product;
 import com._37collaborationserver.domain.product.repository.ProductRepository;
 import com._37collaborationserver.domain.product.dto.ProductResponse;
+import com._37collaborationserver.domain.user.entity.User;
+import com._37collaborationserver.domain.user.repository.UserRepository;
 import com._37collaborationserver.global.exception.BadRequestException;
+import com._37collaborationserver.global.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,8 +22,10 @@ import java.util.stream.Collectors;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final UserRepository userRepository;
 
     private static final List<String> VALID_SORT_OPTIONS = List.of("default", "price_asc", "price_desc");
+    private static final Long DEFAULT_USER_ID = 1L;
 
     public List<ProductResponse> getAllProducts(String sortBy) {
 
@@ -41,5 +47,17 @@ public class ProductService {
         return products.stream()
                 .map(ProductResponse::from)
                 .collect(Collectors.toList());
+    }
+
+    public ProductItemResponse getProductById(Long id) {
+        // 상품 조회
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(ErrorCode.PRODUCT_NOT_FOUND));
+
+        // 유저1 조회
+        User user = userRepository.findById(DEFAULT_USER_ID)
+                .orElseThrow(() -> new NotFoundException(ErrorCode.USER_NOT_FOUND));
+
+        return ProductItemResponse.from(product, user.getPhoneNumber());
     }
 }

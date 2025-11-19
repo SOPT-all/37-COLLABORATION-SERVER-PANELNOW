@@ -1,6 +1,7 @@
 package com._37collaborationserver.domain.product.controller;
 
 
+import com._37collaborationserver.domain.product.dto.ProductItemResponse;
 import com._37collaborationserver.domain.product.dto.ProductResponse;
 import com._37collaborationserver.domain.product.service.ProductService;
 import com._37collaborationserver.global.exception.code.SuccessCode;
@@ -27,9 +28,16 @@ public class ProductController {
                 SuccessResponse.of(SuccessCode.SUCCESS_FETCH, products)
         );
     }
-/*
-    @GetMapping("/{id}")
-    public ResponseEntity<SuccessResponse<ProductResponse>> getProductById(@PathVariable Long id) {}
 
- */
+    @GetMapping("/{id}")
+    public ResponseEntity<SuccessResponse<ProductItemResponse>> getProductById(
+            @PathVariable Long id
+    ) {
+        ProductItemResponse product = productService.getProductById(id);
+        return ResponseEntity.ok(
+                SuccessResponse.of(SuccessCode.SUCCESS_FETCH, product)
+        );
+    }
+
+
 }
