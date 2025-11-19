@@ -18,7 +18,7 @@ public class User {
 	private Long id;
 
 	@Column(nullable = false)
-	private String point;
+	private String currentPoint;
 
 	@Column(nullable = false)
 	private String phoneNumber;
@@ -26,8 +26,8 @@ public class User {
 	@Column(nullable = false)
 	private String usedPoint;
 
-	public User(String point, String phoneNumber, String usedPoint) {
-		this.point = point;
+	public User(String currentPoint, String phoneNumber, String usedPoint) {
+		this.currentPoint = currentPoint;
 		this.phoneNumber = phoneNumber;
 		this.usedPoint = usedPoint;
 	}
