@@ -49,13 +49,13 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-    public ProductItemResponse getProductById(Long id) {
+    public ProductItemResponse getProductById(Long productId, Long userId) {
         // 상품 조회
-        Product product = productRepository.findById(id)
+        Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new NotFoundException(ErrorCode.PRODUCT_NOT_FOUND));
 
-        // 유저1 조회
-        User user = userRepository.findById(DEFAULT_USER_ID)
+        // 유저 조회
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException(ErrorCode.USER_NOT_FOUND));
 
         return ProductItemResponse.from(product, user.getPhoneNumber());

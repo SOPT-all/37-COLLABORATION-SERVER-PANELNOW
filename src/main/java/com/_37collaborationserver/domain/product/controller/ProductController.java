@@ -7,6 +7,7 @@ import com._37collaborationserver.domain.product.service.ProductService;
 import com._37collaborationserver.global.exception.code.SuccessCode;
 import com._37collaborationserver.global.exception.dto.SuccessResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +19,7 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
+    private final DefaultErrorAttributes defaultErrorAttributes;
 
     @GetMapping
     public ResponseEntity<SuccessResponse<List<ProductResponse>>> getAllProducts(
@@ -29,11 +31,12 @@ public class ProductController {
         );
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{productId}")
     public ResponseEntity<SuccessResponse<ProductItemResponse>> getProductById(
-            @PathVariable Long id
+            @PathVariable Long productId,
+            @RequestParam(defaultValue = "1") Long userId
     ) {
-        ProductItemResponse product = productService.getProductById(id);
+        ProductItemResponse product = productService.getProductById(productId, userId);
         return ResponseEntity.ok(
                 SuccessResponse.of(SuccessCode.SUCCESS_FETCH, product)
         );
