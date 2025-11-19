@@ -14,6 +14,7 @@ public enum ErrorCode {
 	MISSING_HEADER(HttpStatus.BAD_REQUEST, "E400004", "필수 요청 헤더가 누락되었습니다."),
 	TYPE_MISMATCH(HttpStatus.BAD_REQUEST, "E400005", "요청 값 타입이 올바르지 않습니다"),
 	DATA_INTEGRITY_VIOLATION(HttpStatus.BAD_REQUEST, "E400006", "데이터 무결성 제약 조건을 위반했습니다"),
+	POINT_NOT_ENOUGH(HttpStatus.BAD_REQUEST, "E400007", "보유 포인트가 부족합니다"),
 
 	/* 401 */
 	UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "E401001", "리소스 접근 권한이 없습니다."),
@@ -27,6 +28,7 @@ public enum ErrorCode {
 	DATA_NOT_FOUND(HttpStatus.NOT_FOUND, "E404001", "데이터가 존재하지 않습니다"),
 	USER_NOT_FOUND(HttpStatus.NOT_FOUND, "E404002", "유저가 존재하지 않습니다"),
 	MISSING_HANDLER(HttpStatus.NOT_FOUND, "E404016", "URL을 찾을 수 없습니다."),
+	PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, "E404003", "상품이 존재하지 않습니다"),
 
 	/* 409 CONFLICT */
 
