@@ -32,6 +32,10 @@ public enum ErrorCode {
 
 	DUPLICATED_NICKNAME(HttpStatus.CONFLICT, "E409001", "리소스 중복입니다"),
 
+	/* 상품 관련 에러 */
+	INVALID_SORT_OPTION(HttpStatus.BAD_REQUEST, "E400006", "유효하지 않은 정렬 옵션입니다. (default, price_asc, price_desc 중 선택)"),
+	PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, "E404003", "상품이 존재하지 않습니다"),
+
 	/* 500 INTERNAL SERVER ERROR */
 
 	INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "E500001", "서버 내부에서 오류가 발생했습니다");

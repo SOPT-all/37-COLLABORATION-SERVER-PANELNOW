@@ -1,11 +1,13 @@
 package com._37collaborationserver.domain.product.service;
 
-import com._37collaborationserver.domain.Product;
+import com._37collaborationserver.domain.product.entity.Product;
 import com._37collaborationserver.domain.product.repository.ProductRepository;
 import com._37collaborationserver.domain.product.dto.ProductResponse;
+import com._37collaborationserver.global.exception.BadRequestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com._37collaborationserver.global.exception.code.ErrorCode;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,7 +19,14 @@ public class ProductService {
 
     private final ProductRepository productRepository;
 
+    private static final List<String> VALID_SORT_OPTIONS = List.of("default", "price_asc", "price_desc");
+
     public List<ProductResponse> getAllProducts(String sortBy) {
+
+        if (sortBy != null && !VALID_SORT_OPTIONS.contains(sortBy.toLowerCase())) {
+            throw new BadRequestException(ErrorCode.INVALID_SORT_OPTION);
+        }
+
         List<Product> products;
 
         if ("price_asc".equalsIgnoreCase(sortBy)) {
