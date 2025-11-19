@@ -1,6 +1,10 @@
 package com._37collaborationserver.domain.product.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,8 +32,8 @@ public class Product {
 	@Column(nullable = false)
 	private String info;
 
-	@Column(nullable = false,name = "usage_manual")
-	private String manual;
+	@Column(nullable = false, name = "usage_manual")
+	private String usageManual;
 
 	@Column(nullable = false)
 	private String guide;
@@ -42,7 +46,7 @@ public class Product {
 		this.imageUrl = imageUrl;
 		this.day = day;
 		this.info = info;
-		this.manual = manual;
+		this.usageManual = usageManual;
 		this.guide = guide;
 		this.name = name;
 	}

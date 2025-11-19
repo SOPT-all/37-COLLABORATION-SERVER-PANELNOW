@@ -26,7 +26,7 @@ public record ProductItemResponse(
                 .phoneNumber(phoneNumber)
                 .exchangeDay(product.getExchangeDate())
                 .info(product.getInfo())
-                .usageManual(product.getManual())
+                .usageManual(product.getUsageManual())
                 .guide(product.getGuide())
                 .build();
     }

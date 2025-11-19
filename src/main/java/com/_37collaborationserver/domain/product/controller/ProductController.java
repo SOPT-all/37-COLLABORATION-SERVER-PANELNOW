@@ -42,5 +42,15 @@ public class ProductController {
         );
     }
 
+    @PostMapping("/{productId}/purchase")
+    public ResponseEntity<SuccessResponse<?>> purchase(
+            @RequestHeader(defaultValue = "1") Long userId,
+            @PathVariable(name = "productId") Long productId
+    ){
+        productService.changePoint(userId, productId);
+        return ResponseEntity.ok(SuccessResponse.of(SuccessCode.SUCCESS_CREATE));
+    }
+
+
 
 }
