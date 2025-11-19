@@ -17,13 +17,13 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(nullable = false)
+	@Column(nullable = false, name = "current_point")
 	private int currentPoint;
 
-	@Column(nullable = false)
+	@Column(nullable = false, name = "phone_number")
 	private String phoneNumber;
 
-	@Column(nullable = false)
+	@Column(nullable = false, name = "used_point")
 	private int usedPoint;
 
 	public User(int currentPoint, String phoneNumber, int usedPoint) {
