@@ -1,4 +1,4 @@
-package com._37collaborationserver.dto;
+package com._37collaborationserver.domain.product.dto;
 
 import com._37collaborationserver.domain.Product;
 import lombok.Builder;
