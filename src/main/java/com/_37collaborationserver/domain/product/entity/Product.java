@@ -29,8 +29,8 @@ public class Product {
 	@Column(nullable = false)
 	private String info;
 
-	@Column(nullable = false)
-	private String manual;
+	@Column(nullable = false, name = "usage_manual")
+	private String usageManual;
 
 	@Column(nullable = false)
 	private String guide;
@@ -38,12 +38,12 @@ public class Product {
 	@Column(nullable = false)
 	private String name;
 
-	public Product(int price, String imageUrl, String day, String info, String manual, String guide, String name) {
+	public Product(int price, String imageUrl, String day, String info, String usageManual, String guide, String name) {
 		this.price = price;
 		this.imageUrl = imageUrl;
 		this.day = day;
 		this.info = info;
-		this.manual = manual;
+		this.usageManual = usageManual;
 		this.guide = guide;
 		this.name = name;
 	}

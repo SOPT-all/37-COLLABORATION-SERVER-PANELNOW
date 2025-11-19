@@ -1,8 +1,7 @@
-package com._37collaborationserver.domain.user.entity;
+package com._37collaborationserver.domain.product.entity;
 
-import com._37collaborationserver.domain.product.entity.Product;
+import com._37collaborationserver.domain.user.entity.User;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;

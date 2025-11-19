@@ -17,18 +17,23 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(nullable = false)
-	private String currentPoint;
+	@Column(nullable = false, name = "current_point")
+	private int currentPoint;
 
-	@Column(nullable = false)
+	@Column(nullable = false, name = "phone_number")
 	private String phoneNumber;
 
-	@Column(nullable = false)
-	private String usedPoint;
+	@Column(nullable = false, name = "used_point")
+	private int usedPoint;
 
-	public User(String currentPoint, String phoneNumber, String usedPoint) {
+	public User(int currentPoint, String phoneNumber, int usedPoint) {
 		this.currentPoint = currentPoint;
 		this.phoneNumber = phoneNumber;
 		this.usedPoint = usedPoint;
+	}
+
+	public void updatePoint(int point){
+		this.currentPoint -= point;
+		this.usedPoint += point;
 	}
 }
