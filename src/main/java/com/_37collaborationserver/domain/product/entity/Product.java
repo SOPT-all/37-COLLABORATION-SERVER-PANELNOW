@@ -9,6 +9,9 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -38,7 +41,7 @@ public class Product {
 	@Column(nullable = false)
 	private String name;
 
-	public Product(int price, String imageUrl, String day, String info, String usageManual, String guide, String name) {
+	public Product(int price, String imageUrl, String day, String info, String manual, String guide, String name) {
 		this.price = price;
 		this.imageUrl = imageUrl;
 		this.day = day;
@@ -46,5 +49,15 @@ public class Product {
 		this.usageManual = usageManual;
 		this.guide = guide;
 		this.name = name;
+	}
+
+	public String getExchangeDate() {
+		try {
+			int daysToAdd = Integer.parseInt(this.day.replaceAll("[^0-9]", ""));
+			LocalDate exchangeDate = LocalDate.now().plusDays(daysToAdd);
+			return exchangeDate.format(DateTimeFormatter.ISO_LOCAL_DATE);
+		} catch (NumberFormatException e) {
+			return this.day;
+		}
 	}
 }

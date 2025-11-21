@@ -28,11 +28,14 @@ public enum ErrorCode {
 	DATA_NOT_FOUND(HttpStatus.NOT_FOUND, "E404001", "데이터가 존재하지 않습니다"),
 	USER_NOT_FOUND(HttpStatus.NOT_FOUND, "E404002", "유저가 존재하지 않습니다"),
 	MISSING_HANDLER(HttpStatus.NOT_FOUND, "E404016", "URL을 찾을 수 없습니다."),
-	PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, "E404003", "상품이 존재하지 않습니다"),
 
 	/* 409 CONFLICT */
 
 	DUPLICATED_NICKNAME(HttpStatus.CONFLICT, "E409001", "리소스 중복입니다"),
+
+	/* 상품 관련 에러 */
+	INVALID_SORT_OPTION(HttpStatus.BAD_REQUEST, "E400006", "유효하지 않은 정렬 옵션입니다. (default, price_asc, price_desc 중 선택)"),
+	PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, "E404003", "상품이 존재하지 않습니다"),
 
 	/* 500 INTERNAL SERVER ERROR */
 
