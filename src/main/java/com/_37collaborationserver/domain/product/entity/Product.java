@@ -29,13 +29,13 @@ public class Product {
 	@Column(nullable = false)
 	private String day;
 
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private String info;
 
-	@Column(nullable = false, name = "usage_manual")
+	@Column(nullable = true, name = "usage_manual")
 	private String usageManual;
 
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private String guide;
 
 	@Column(nullable = false)
