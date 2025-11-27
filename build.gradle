@@ -36,8 +36,33 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
+    // Spring Boot Test (JUnit 5 포함)
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // Lombok for Test
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+
+    testRuntimeOnly 'com.h2database:h2'
+    testImplementation 'com.mysql:mysql-connector-j'
+    testImplementation 'org.testcontainers:testcontainers:1.19.3'
+    testImplementation 'org.testcontainers:mysql:1.19.3'
+    testImplementation 'org.testcontainers:junit-jupiter:1.19.3'
+
 }
+test {
+    useJUnitPlatform()
+
+    // 테스트 실행 시 로그 출력
+    testLogging {
+        events "passed", "skipped", "failed"
+        showStandardStreams = true
+    }
+}
+    /*
 
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+     */
