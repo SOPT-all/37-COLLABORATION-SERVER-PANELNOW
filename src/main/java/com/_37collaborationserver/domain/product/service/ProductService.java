@@ -12,6 +12,8 @@ import com._37collaborationserver.domain.user.service.UserService;
 import com._37collaborationserver.global.exception.BadRequestException;
 import com._37collaborationserver.global.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com._37collaborationserver.global.exception.code.ErrorCode;
@@ -22,16 +24,19 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@Slf4j
 public class ProductService {
 
     private final ProductRepository productRepository;
     private final UserProductRepository userProductRepository;
     private final UserRepository userRepository;
     private final UserService userService;
+    private final ProductTransactionService productTransactionService;
 
 
     private static final List<String> VALID_SORT_OPTIONS = List.of("default", "price_asc", "price_desc");
     private static final Long DEFAULT_USER_ID = 1L;
+    private static final int MAX_RETRY_COUNT = 3; // 재시도 최대 횟수
 
     public List<ProductResponse> getAllProducts(String sortBy) {
 
@@ -67,21 +72,40 @@ public class ProductService {
         return ProductItemResponse.from(product, user.getPhoneNumber());
     }
 
-    @Transactional
     public void changePoint(final Long userId, final Long productId) {
-        User user = userService.getUserById(userId);
-        Product product = getProductById(productId);
+        int retryCount = 0;
 
-        if (user.getCurrentPoint() < product.getPrice()){
-            throw new BadRequestException(ErrorCode.POINT_NOT_ENOUGH);
+        while (retryCount < MAX_RETRY_COUNT) {
+            try {
+                // 실제 교환 로직 실행
+                productTransactionService.executeChangePoint(userId, productId);
+                return; // 성공 시 메서드 종료
+
+            } catch (ObjectOptimisticLockingFailureException e) {
+                // 낙관적 락 충돌 발생
+                retryCount++;
+
+                log.warn("낙관적 락 충돌 발생 - 재시도 {}/{} (userId: {}, productId: {})",
+                        retryCount, MAX_RETRY_COUNT, userId, productId);
+
+                if (retryCount >= MAX_RETRY_COUNT) {
+                    log.error("최대 재시도 횟수 초과 (userId: {}, productId: {})", userId, productId);
+                    throw new BadRequestException(ErrorCode.EXCHANGE_FAILED_DUE_TO_CONCURRENCY);
+                }
+
+                // 재시도 전 짧은 대기
+                try {
+                    Thread.sleep(50 * retryCount);
+                } catch (InterruptedException ie) {
+                    Thread.currentThread().interrupt();
+                    throw new BadRequestException(ErrorCode.EXCHANGE_FAILED_DUE_TO_CONCURRENCY);
+                }
+            }
         }
-        user.updatePoint(product.getPrice());
-        UserProduct userProduct = new UserProduct(user, product);
-        userProductRepository.save(userProduct);
     }
 
-    public Product getProductById(final Long productId) {
+    private Product findProductById(final Long productId) {
         return productRepository.findById(productId)
-                .orElseThrow(()-> new NotFoundException(ErrorCode.PRODUCT_NOT_FOUND));
+                .orElseThrow(() -> new NotFoundException(ErrorCode.PRODUCT_NOT_FOUND));
     }
 }
